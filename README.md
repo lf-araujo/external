@@ -15,3 +15,5 @@ git clone git@github.com:albertlauncher/external.git "/usr/local/share/albert/ex
 If you feel uncomfortable installing third party extensions that are executed on your system (you should), note that the code is open source and reviewed before it gets into the repository. If you are the detective kind of guy you are free to join the team and review code that people send us.
 
 We do not have the time to take care of packaging compiled external extensions for all platforms out there. If you want to share your extension, please use one of the dozens of script languages out there.
+
+This is mainly a users maintained repo. If you send a PR I'll invite you to the reviewers team (if I dont forget it), I'd appreciate if you could review others contributions.
