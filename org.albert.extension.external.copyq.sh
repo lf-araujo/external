@@ -9,7 +9,7 @@ send_metadata() {
     metadata='{
     "iid":"org.albert.extension.external/v2.0",
     "name":"Clipboard Manager",
-    "version":"1.2",
+    "version":"1.3",
     "author":"BarbUk",
     "dependencies":["copyq"],
     "trigger":"cq "
@@ -39,12 +39,12 @@ build_json() {
     read -r -d '' json << EOM
 {
     "name": "$row",
-    "icon": "/usr/share/icons/hicolor/scalable/apps/copyq-normal.svg",
+    "icon": "copyq-normal",
     "description": "$count",
     "actions": [{
         "name": "copy $row to clipboard",
         "command": "copyq",
-        "arguments": ["select", "$count"]
+        "arguments": ["select($count); sleep(50); paste()"]
     }]
 },
 EOM
@@ -64,8 +64,8 @@ build_albert_query() {
         row=$(copyq_get_row "$count")
         json=$(build_json "$count" "$row")
     else
-        ## else get the last 11
-        for count in {0..10}; do
+        ## else get the last 15
+        for count in {0..14}; do
             row=$(copyq_get_row "$count")
             if [[ "$row" == "''" ]]; then
                 continue
@@ -97,17 +97,22 @@ main() {
             exit 0
         ;;
         "INITIALIZE")
-    	    exit 0
-    	;;
-  	    "FINALIZE")
-    	    exit 0
-    	;;
-  	    "SETUPSESSION")
-    	    exit 0
-    	;;
-  	    "TEARDOWNSESSION")
-    	    exit 0
-    	;;
+            if ! which copyq >/dev/null 2>&1; then
+                echo "You need to install copyq" >&2
+                exit 1
+            fi
+
+            exit 0
+        ;;
+        "FINALIZE")
+            exit 0
+        ;;
+        "SETUPSESSION")
+            exit 0
+        ;;
+        "TEARDOWNSESSION")
+            exit 0
+        ;;
     esac
 }
 
