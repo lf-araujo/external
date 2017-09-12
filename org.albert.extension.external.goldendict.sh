@@ -13,12 +13,7 @@ case $ALBERT_OP in
     exit 0
     ;;
   "INITIALIZE")
-    if hash goldendict 2>/dev/null; then
-      exit 0
-    else
-      exit 1
-    fi
-    echo -n "{}"
+    hash goldendict 2>/dev/null && exit 0 || exit 1
     ;;
   "QUERY")
     QUERYSTRING="${ALBERT_QUERY:3}"
