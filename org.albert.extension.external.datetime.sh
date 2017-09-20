@@ -24,7 +24,7 @@
 #   time, it would be unsuitable for filenames.
 # - No "copy time only" action because I cannot think of a use case.
 
-readonly FULL_DATE_FORMAT='%A, %d.%m.%Y, %H:%M Uhr'
+readonly FULL_DATE_FORMAT='%A, %d.%m.%Y, %H:%M'
 readonly TIMESTAMP_FORMAT='%F-%H-%M-%S' # 2017-09-10-21-07-34
 
 set -o errexit -o pipefail -o nounset
