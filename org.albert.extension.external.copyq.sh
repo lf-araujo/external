@@ -9,10 +9,10 @@ send_metadata() {
     metadata='{
     "iid":"org.albert.extension.external/v2.0",
     "name":"Clipboard Manager",
-    "version":"1.3",
+    "version":"1.4",
     "author":"BarbUk",
     "dependencies":["copyq"],
-    "trigger":"cq "
+    "trigger":"cq"
 }'
     echo -n "${metadata}"
 }
@@ -41,11 +41,18 @@ build_json() {
     "name": "$row",
     "icon": "copyq-normal",
     "description": "$count",
-    "actions": [{
-        "name": "copy $row to clipboard",
-        "command": "copyq",
-        "arguments": ["select($count); sleep(50); paste()"]
-    }]
+    "actions": [
+        {
+            "name": "paste directly",
+            "command": "copyq",
+            "arguments": ["select($count); sleep(60); paste()"]
+        },
+        {
+            "name": "copy to clipboard",
+            "command": "copyq",
+            "arguments": ["select", "$count"]
+        }
+    ]
 },
 EOM
 
@@ -92,7 +99,7 @@ main() {
 
         "QUERY")
             ALBERT_QUERY=${ALBERT_QUERY:-}
-            QUERYSTRING="${ALBERT_QUERY:3}"
+            QUERYSTRING="${ALBERT_QUERY:2}"
             build_albert_query "$QUERYSTRING"
             exit 0
         ;;
