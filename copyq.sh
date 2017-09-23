@@ -7,7 +7,7 @@ send_metadata() {
     local metadata
 
     metadata='{
-    "iid":"org.albert.extension.external/v2.0",
+    "iid":"org.albert.extension.external/v3.0",
     "name":"Clipboard Manager",
     "version":"1.4",
     "author":"BarbUk",
@@ -112,12 +112,6 @@ main() {
             exit 0
         ;;
         "FINALIZE")
-            exit 0
-        ;;
-        "SETUPSESSION")
-            exit 0
-        ;;
-        "TEARDOWNSESSION")
             exit 0
         ;;
     esac

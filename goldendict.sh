@@ -2,7 +2,7 @@
 case $ALBERT_OP in
   "METADATA")
     STDOUT='{
-      "iid":"org.albert.extension.external/v2.0",
+      "iid":"org.albert.extension.external/v3.0",
       "name":"Goldendict",
       "version":"1.0",
       "author":"Manuel Schneider",

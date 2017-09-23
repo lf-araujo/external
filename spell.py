@@ -30,7 +30,7 @@ albert_op = os.environ.get("ALBERT_OP")
 
 if albert_op == "METADATA":
     metadata = {
-      "iid": "org.albert.extension.external/v2.0",
+      "iid": "org.albert.extension.external/v3.0",
       "name": "spell",
       "version": "1.0",
       "author": "Marek Mazur",
@@ -49,16 +49,7 @@ elif albert_op == "INITIALIZE":
 
 elif albert_op == "FINALIZE":
     sys.exit(0)
-
-elif albert_op == "SETUPSESSION":
-    sys.exit(0)
-
-elif albert_op == "SETUPSESSION":
-    sys.exit(0)
-
-elif albert_op == "TEARDOWNSESSION":
-    sys.exit(0)
-
+    
 elif albert_op == "QUERY":
 
     albert_query = os.environ.get("ALBERT_QUERY")

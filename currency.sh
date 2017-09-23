@@ -3,7 +3,7 @@
 case $ALBERT_OP in
   "METADATA")
     METADATA='{
-      "iid":"org.albert.extension.external/v2.0",
+      "iid":"org.albert.extension.external/v3.0",
       "name":"Currency converter",
       "version":"1.0",
       "author":"Manuel Schneider",
@@ -17,12 +17,6 @@ case $ALBERT_OP in
     exit 0
     ;;
   "FINALIZE")
-    exit 0
-    ;;
-  "SETUPSESSION")
-    exit 0
-    ;;
-  "TEARDOWNSESSION")
     exit 0
     ;;
   "QUERY")

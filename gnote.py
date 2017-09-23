@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-""" A quick and dirty shim to search Tomboy Notes over dbus."""
+""" A quick and dirty shim to search Gnote over dbus."""
 
 import os
 import sys
@@ -9,25 +9,26 @@ import json
 from pydbus import SessionBus
 
 bus = SessionBus()
-tomboy = bus.get("org.gnome.Tomboy", "/org/gnome/Tomboy/RemoteControl")
+gnote = bus.get("org.gnome.Gnote", "/org/gnome/Gnote/RemoteControl")
 albert_op = os.environ.get("ALBERT_OP")
 
 if len(sys.argv) > 1:
     if len(sys.argv) > 2:
-        response = getattr(tomboy, sys.argv[1])(sys.argv[2])
+        response = getattr(gnote, sys.argv[1])(sys.argv[2])
     else:
-        response = getattr(tomboy, sys.argv[1])()
+        response = getattr(gnote, sys.argv[1])()
     if sys.argv[1] == "CreateNote":
-        tomboy.DisplayNote(response)
+        gnote.DisplayNote(response)
+
 
 if albert_op == "METADATA":
     metadata = {
-        "iid": "org.albert.extension.external/v2.0",
-        "name": "Tomboy",
+        "iid": "org.albert.extension.external/v3.0",
+        "name": "Gnote",
         "version": "0.1",
         "author": "Will Timpson",
-        "dependencies": ["tomboy", "python-pydbus"],
-        "trigger": "tb "
+        "dependencies": ["gnote", "python-pydbus"],
+        "trigger": "gn "
     }
     print(json.dumps(metadata))
     sys.exit(0)
@@ -48,8 +49,8 @@ elif albert_op == "QUERY":
         item = {
             "id": id,
             "name": name,
-            "description": "Tomboy Notes",
-            "icon": "tomboy",
+            "description": "Gnote",
+            "icon": "gnote",
             "actions": actions
         }
         return item
@@ -62,12 +63,12 @@ elif albert_op == "QUERY":
         ("Hide Note", "HideNote"),
         ("Delete Note", "DeleteNote")
     ]
-    for note in tomboy.SearchNotes(query, False):
+    for note in gnote.SearchNotes(query, False):
         action_list = []
         for label, interface in note_actions:
             action_list.append(build_action(label, interface, note))
 
-        items.append(build_item(note, tomboy.GetNoteTitle(note), action_list))
+        items.append(build_item(note, gnote.GetNoteTitle(note), action_list))
 
     app_actions = [
         ("Create New Note", "CreateNote"),
@@ -80,5 +81,5 @@ elif albert_op == "QUERY":
     print(json.dumps({"items": items}))
     sys.exit(0)
 
-elif albert_op in ["INITIALIZE", "FINALIZE", "SETUPSESSION", "TEARDOWNSESSION"]:
+elif albert_op in ["INITIALIZE", "FINALIZE"]:
     sys.exit(0)
