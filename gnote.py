@@ -55,7 +55,7 @@ elif albert_op == "QUERY":
         }
         return item
 
-    query = ' '.join(os.environ.get("ALBERT_QUERY").split(' ')[1:])
+    query = os.environ.get("ALBERT_QUERY")
     items = []
 
     note_actions = [

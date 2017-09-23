@@ -49,14 +49,14 @@ elif albert_op == "INITIALIZE":
 
 elif albert_op == "FINALIZE":
     sys.exit(0)
-    
+
 elif albert_op == "QUERY":
 
     albert_query = os.environ.get("ALBERT_QUERY")
     phrase = ''
     language = ''
 
-    match = re.search('^spell (?P<language>[^ ]{2,}) (?P<phrase>.*)$', albert_query)
+    match = re.search('^(?P<language>[^ ]{2,}) (?P<phrase>.*)$', albert_query)
     if match:
         phrase = match.group('phrase')
         language = match.group('language')

@@ -16,17 +16,16 @@ case $ALBERT_OP in
     hash goldendict 2>/dev/null && exit 0 || exit 1
     ;;
   "QUERY")
-    QUERYSTRING="${ALBERT_QUERY:3}"
     echo -n '{
       "items":[{
         "id":"goldendict",
-        "name":"Use goldendict to lookup '"'${QUERYSTRING}'"'",
-        "description":"Opens the scan popup and searches for '"'${QUERYSTRING}'"'.",
+        "name":"Use goldendict to lookup '"'${ALBERT_QUERY}'"'",
+        "description":"Opens the scan popup and searches for '"'${ALBERT_QUERY}'"'.",
         "icon":"goldendict",
         "actions":[{
           "name":"goldendict",
           "command":"goldendict",
-          "arguments":["'${QUERYSTRING}'"]
+          "arguments":["'${ALBERT_QUERY}'"]
         }]
       }]
     }'

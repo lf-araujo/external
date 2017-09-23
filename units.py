@@ -66,4 +66,4 @@ if op == "METADATA":
 elif op == "INITIALIZE":
     intialize()
 elif op == "QUERY":
-    query(os.environ["ALBERT_QUERY"][6:])
+    query(os.environ["ALBERT_QUERY"])

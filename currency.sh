@@ -22,10 +22,9 @@ case $ALBERT_OP in
     exit 0
     ;;
   "QUERY")
-    amount=`echo ${ALBERT_QUERY:5} | cut -d ' ' -f1`
-    from=`echo ${ALBERT_QUERY:5} | cut -d ' ' -f2`
-    to=`echo ${ALBERT_QUERY:5} | cut -d ' ' -f3`
-    equation=`wget -qO- "https://finance.google.com/finance/converter?a=${amount}&from=${from}&to=${to}"  | sed '/res/!d;s/<[^>]*>//g'`
+    read -r -a fields <<< "${ALBERT_QUERY}"
+    [ ${#fields[@]} -ne 3 ] && exit 0
+    equation=`wget -qO- "https://finance.google.com/finance/converter?a=${fields[0]}&from=${fields[1]}&to=${fields[2]}"  | sed '/res/!d;s/<[^>]*>//g'`
     [ ${#equation} -le 2 ] && exit 0
     rhs=`echo $equation | cut -d ' ' -f4-`
     echo \

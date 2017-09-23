@@ -23,7 +23,7 @@ case $ALBERT_OP in
     RESULTS='{
       "items":[{
         "name":"Item One",
-        "description":"Item description containing the query: '"'${ALBERT_QUERY:9}'"'",
+        "description":"Item description containing the query: '"'${ALBERT_QUERY}'"'",
         "icon":"unknown",
         "actions":[{
           "name":"Item action 1",
@@ -36,7 +36,7 @@ case $ALBERT_OP in
         }]
       },{
         "name":"Item two",
-        "description":"Item description containing the query: '"'${ALBERT_QUERY:9}'"'",
+        "description":"Item description containing the query: '"'${ALBERT_QUERY}'"'",
         "icon":"unknown",
         "actions":[{
           "name":"Item action 2",
