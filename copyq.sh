@@ -7,13 +7,15 @@ send_metadata() {
     local metadata
 
     metadata='{
-    "iid":"org.albert.extension.external/v3.0",
-    "name":"Clipboard Manager",
-    "version":"1.4",
-    "author":"BarbUk",
-    "dependencies":["copyq"],
-    "trigger":"cq"
-}'
+        "iid":"org.albert.extension.external/v3.0",
+        "name":"CopyQ",
+        "version":"1.4",
+        "author":"BarbUk",
+        "dependencies":["copyq"],
+        "trigger":"cq ",
+        "description": "Access to the CopyQ clipboard manager.",
+        "usage_example": "cp <search string>"
+    }'
     echo -n "${metadata}"
 }
 
@@ -98,9 +100,7 @@ main() {
         ;;
 
         "QUERY")
-            ALBERT_QUERY=${ALBERT_QUERY:-}
-            QUERYSTRING="${ALBERT_QUERY:2}"
-            build_albert_query "$QUERYSTRING"
+            build_albert_query "$ALBERT_QUERY"
             exit 0
         ;;
         "INITIALIZE")

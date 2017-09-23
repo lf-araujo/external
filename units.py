@@ -18,10 +18,11 @@ def metadata():
         "iid": "org.albert.extension.external/v3.0",
         "name": "Units",
         "version": "1.0",
-        "descrition": "Wrapper for GNU units.",
         "author": "Manuel Schneider",
         "dependencies": ["units", "xclip"],
-        "trigger": "units "
+        "trigger": "units ",
+        "description": "Unit converter for almost all popular units.",
+        "usage_example": "units 1mach mph"
     }))
 
 
@@ -43,10 +44,7 @@ def query(string):
             item["actions"] = [{
                 "name": "Copy to clipboard",
                 "command": "sh",
-                "arguments": [
-                    "-c", "echo -n '%s' | xclip -i; echo -n '%s' | xclip -i -selection clipboard;"
-                    % (result, result)
-                ]
+                "arguments": ["-c", "echo -n '%s' | xclip -i -selection clipboard;" % (result, result)]
             }]
         except subprocess.CalledProcessError as e:
             result = e.stdout.decode('utf-8').strip().partition('\n')[0]

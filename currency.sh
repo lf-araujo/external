@@ -8,7 +8,9 @@ case $ALBERT_OP in
       "version":"1.0",
       "author":"Manuel Schneider",
       "dependencies":[],
-      "trigger":"exch "
+      "trigger":"exch ",
+      "description": "Adapter for Google'\''s currency converter.",
+      "usage_example": "exch 5 usd eur"
     }'
     echo -n "${METADATA}"
     exit 0
@@ -35,7 +37,7 @@ case $ALBERT_OP in
     "actions":[{
       "name":"Copy to clipboard",
       "command":"sh",
-      "arguments":["-c", "echo -n \"'"${rhs}"'\" | xclip -i; echo -n \"'"${rhs}"'\" | xclip -i -selection clipboard;"]
+      "arguments":["-c", "echo -n \"'"${rhs}"'\" | xclip -i -selection clipboard;"]
     }]
   }]
 }'

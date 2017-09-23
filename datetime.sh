@@ -29,77 +29,48 @@ readonly TIMESTAMP_FORMAT='%F-%H-%M-%S' # 2017-09-10-21-07-34
 
 set -o errexit -o pipefail -o nounset
 
-readonly THIS_PROGRAM=$0
-
-executeAlbertExtension() {
-  case $ALBERT_OP in
-    "METADATA")
-      METADATA='{
-        "iid":"org.albert.extension.external/v3.0",
-        "name":"Current date and time to clipboard",
-        "version":"1.0",
-        "author":"Jakob Schöttl",
-        "dependencies":["xclip"],
-        "trigger":"date "
-      }'
-      echo -n "${METADATA}"
-      exit 0
-      ;;
-    "INITIALIZE")
-      exit 0
-      ;;
-    "FINALIZE")
-      exit 0
-      ;;
-    "QUERY")
-      declare fullDateTime isoDate daytime timestamp
-      fullDateTime=$(date +"$FULL_DATE_FORMAT")
-      isoDate=$(date -I)
-      #daytime=$(date +'%H:%M')
-      timestamp=$(date +"$TIMESTAMP_FORMAT")
-      RESULTS='{
-        "items":[{
-          "name":"'"$fullDateTime"'",
-          "description":"Current date and time",
-          "icon":"unknown",
-          "actions":[{
-            "name":"Copy '"'$isoDate'"' to clipboard",
-            "command":"'"$THIS_PROGRAM"'",
-            "arguments":["call-xclip", "'$isoDate'", "-r", "-selection", "clipboard"]
-          },{
-            "name":"Copy full date and time to clipboard",
-            "command":"'"$THIS_PROGRAM"'",
-            "arguments":["call-xclip", "'$fullDateTime'", "-r", "-selection", "clipboard"]
-          },{
-            "name":"Copy '"'$timestamp'"' to clipboard",
-            "command":"'"$THIS_PROGRAM"'",
-            "arguments":["call-xclip", "'$timestamp'", "-r", "-selection", "clipboard"]
-          }]
-        }]
-        }'
-      echo -n "${RESULTS}"
-      exit 0
-      ;;
-  esac
-}
-
-# Call xclip -i with $1 as stdin and pass further args to xclip.
-# That is, copy the first argument to the X clipboard.
-xclipWith1stArgAsInput() {
-  declare text=${1:-}
-  shift # left-shift arguments, discard $1
-  xclip -i "$@" <<<"$text"
-}
-
-main() {
-  declare command=${1:-}
-
-  if [[ $command == "call-xclip" ]]; then
-    shift # discard the "call-xclip" argument
-    xclipWith1stArgAsInput "$@"
-  else
-    executeAlbertExtension
-  fi
-}
-
-main "$@"
+case $ALBERT_OP in
+"METADATA")
+  METADATA='{
+    "iid": "org.albert.extension.external/v3.0",
+    "name": "DateTime",
+    "version": "1.0",
+    "author": "Jakob Schöttl",
+    "dependencies": ["xclip"],
+    "trigger": "date ",
+    "description": "Copy current date and time to clipboard",
+    "usage_example": "date"
+  }'
+  echo -n "${METADATA}"
+  exit 0
+  ;;
+"QUERY")
+  declare fullDateTime isoDate daytime timestamp
+  fullDateTime=$(date +"$FULL_DATE_FORMAT")
+  isoDate=$(date -I)
+  #daytime=$(date +'%H:%M')
+  timestamp=$(date +"$TIMESTAMP_FORMAT")
+  RESULTS='{
+    "items":[{
+      "name":"'"$fullDateTime"'",
+      "description":"Current date and time",
+      "icon":"unknown",
+      "actions":[{
+        "name":"Copy '"'$isoDate'"' to clipboard",
+        "command":"sh",
+        "arguments":["-c", "echo -n \"'"${isoDate}"'\" | xclip -i -selection clipboard;"]
+      },{
+        "name":"Copy '"'$fullDateTime'"' to clipboard",
+        "command":"sh",
+        "arguments":["-c", "echo -n \"'"${fullDateTime}"'\" | xclip -i -selection clipboard;"]
+      },{
+        "name":"Copy '"'$timestamp'"' to clipboard",
+        "command":"sh",
+        "arguments":["-c", "echo -n \"'"${timestamp}"'\" | xclip -i -selection clipboard;"]
+      }]
+    }]
+    }'
+  echo -n "${RESULTS}"
+  exit 0
+  ;;
+esac
