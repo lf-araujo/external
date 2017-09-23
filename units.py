@@ -44,7 +44,7 @@ def query(string):
             item["actions"] = [{
                 "name": "Copy to clipboard",
                 "command": "sh",
-                "arguments": ["-c", "echo -n '%s' | xclip -i -selection clipboard;" % (result, result)]
+                "arguments": ["-c", "echo -n '%s' | xclip -i -selection clipboard;" % (result)]
             }]
         except subprocess.CalledProcessError as e:
             result = e.stdout.decode('utf-8').strip().partition('\n')[0]
