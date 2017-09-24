@@ -40,7 +40,7 @@ executeAlbertExtension() {
         "version":"1.0",
         "author":"Jakob Schöttl",
         "dependencies":["xclip"],
-        "trigger":"date"
+        "trigger":"date "
       }'
       echo -n "${METADATA}"
       exit 0
