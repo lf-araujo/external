@@ -30,47 +30,43 @@ readonly TIMESTAMP_FORMAT='%F-%H-%M-%S' # 2017-09-10-21-07-34
 set -o errexit -o pipefail -o nounset
 
 case $ALBERT_OP in
-"METADATA")
-  METADATA='{
-    "iid": "org.albert.extension.external/v3.0",
-    "name": "DateTime",
-    "version": "1.0",
-    "author": "Jakob Schöttl",
-    "dependencies": ["xclip"],
-    "trigger": "date ",
-    "description": "Copy current date and time to clipboard",
-    "usage_example": "date"
-  }'
-  echo -n "${METADATA}"
-  exit 0
-  ;;
-"QUERY")
-  declare fullDateTime isoDate daytime timestamp
-  fullDateTime=$(date +"$FULL_DATE_FORMAT")
-  isoDate=$(date -I)
-  #daytime=$(date +'%H:%M')
-  timestamp=$(date +"$TIMESTAMP_FORMAT")
-  RESULTS='{
-    "items":[{
-      "name":"'"$fullDateTime"'",
-      "description":"Current date and time",
-      "icon":"unknown",
-      "actions":[{
-        "name":"Copy '"'$isoDate'"' to clipboard",
-        "command":"sh",
-        "arguments":["-c", "echo -n \"'"${isoDate}"'\" | xclip -i -selection clipboard;"]
-      },{
-        "name":"Copy '"'$fullDateTime'"' to clipboard",
-        "command":"sh",
-        "arguments":["-c", "echo -n \"'"${fullDateTime}"'\" | xclip -i -selection clipboard;"]
-      },{
-        "name":"Copy '"'$timestamp'"' to clipboard",
-        "command":"sh",
-        "arguments":["-c", "echo -n \"'"${timestamp}"'\" | xclip -i -selection clipboard;"]
-      }]
-    }]
-    }'
-  echo -n "${RESULTS}"
-  exit 0
-  ;;
+    "METADATA")
+        echo '{
+            "iid": "org.albert.extension.external/v3.0",
+            "name": "DateTime",
+            "version": "1.0",
+            "author": "Jakob Schöttl",
+            "dependencies": ["xclip"],
+            "trigger": "date ",
+            "description": "Copy current date and time to clipboard",
+            "usage_example": "date"
+        }'
+    ;;
+    "QUERY")
+        declare fullDateTime isoDate daytime timestamp
+        fullDateTime=$(date +"$FULL_DATE_FORMAT")
+        isoDate=$(date -I)
+        #daytime=$(date +'%H:%M')
+        timestamp=$(date +"$TIMESTAMP_FORMAT")
+        echo '{
+            "items":[{
+                "name":"'"$fullDateTime"'",
+                "description":"Current date and time",
+                "icon":"unknown",
+                "actions":[{
+                    "name":"Copy '"'$isoDate'"' to clipboard",
+                    "command":"sh",
+                    "arguments":["-c", "echo -n \"'"${isoDate}"'\" | xclip -i -selection clipboard;"]
+                },{
+                    "name":"Copy '"'$fullDateTime'"' to clipboard",
+                    "command":"sh",
+                    "arguments":["-c", "echo -n \"'"${fullDateTime}"'\" | xclip -i -selection clipboard;"]
+                },{
+                    "name":"Copy '"'$timestamp'"' to clipboard",
+                    "command":"sh",
+                    "arguments":["-c", "echo -n \"'"${timestamp}"'\" | xclip -i -selection clipboard;"]
+                }]
+            }]
+        }'
+    ;;
 esac
